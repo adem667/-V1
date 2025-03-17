@@ -1,0 +1,126 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #555;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 🔹 تصميم خاص بنتائج الأخبار */
+.news-item {
+    border: 2px solid #ddd;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: left;
+    transition: transform 0.2s ease-in-out;
+}
+
+.news-item:hover {
+    transform: scale(1.02);
+}
+
+/* ✅ أخبار مؤكدة وصحيحة */
+.true-news {
+    border-left: 6px solid green;
+    background-color: #eaffea;
+}
+
+/* ❌ أخبار كاذبة */
+.false-news {
+    border-left: 6px solid red;
+    background-color: #ffeaea;
+}
+
+/* ⚠️ أخبار غير محددة */
+.neutral-news {
+    border-left: 6px solid orange;
+    background-color: #fff3cd;
+}
+
+/* 🔹 تحسين عرض مصدر الخبر */
+.news-item h3 {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+}
+
+.news-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* 📱 تحسين التصميم للهواتف */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+}
