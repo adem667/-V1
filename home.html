@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية</title>
+    <style>
+        /* الأساسيات */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .taskbar {
+            background-color: #001a33; /* أزرق داكن جدًا */
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .taskbar h1 {
+            color: white;
+            font-size: 24px;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .taskbar .home-icon {
+            margin-left: 10px;
+        }
+
+        .taskbar .home-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 70px auto 20px auto; /* Adjust for the taskbar */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex: 1;
+        }
+
+        h2 {
+            color: #001a33; /* أزرق داكن جدًا */
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .button-container a {
+            display: block;
+            width: 120px;  /* مربع الشكل */
+            height: 120px; /* مربع الشكل */
+            background-color: #808080; /* رمادي */
+            color: white;
+            padding: 10px;
+            margin: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .button-container a img {
+            width: 60px; /* حجم الصورة داخل الزر */
+            height: 60px;
+            margin-bottom: 5px; /* المسافة بين الصورة والنص */
+        }
+
+        .button-container a:hover {
+            background-color: #555; /* رمادي داكن عند التمرير */
+            transform: scale(1.05);
+        }
+
+        /* الفوتر */
+        .footer {
+            padding: 15px;
+            text-align: center;
+            background-color: #001a33; /* أزرق داكن جدًا */
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            margin-top: auto;
+        }
+
+        .footer small {
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* الوضع المظلم */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode p {
+            color: #ffffff;
+        }
+
+        body.dark-mode .button-container a {
+            background-color: #333; /* رمادي داكن في الوضع المظلم */
+            color: #fff;
+        }
+
+        body.dark-mode .button-container a:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="taskbar">
+        <a href="home.html" class="home-icon">
+            <img src="source/home.png" alt="الصفحة الرئيسية">
+        </a>
+        <h1>الصفحة الرئيسية</h1>
+    </div>
+
+    <div class="container">
+        <h2>مرحبًا بك في الصفحة الرئيسية</h2>
+        <p>اختر أحد الخيارات التالية للانتقال إلى صفحات أخرى:</p>
+
+        <div class="button-container">
+            <!-- زر تحقق من الأخبار (Fact Checker) مع صورة robot.png -->
+            <a href="bot.html">
+                <img src="source/robot.png" alt="تحقق من الأخبار">
+                تحقق من الأخبار
+            </a>
+            <!-- زر المقالات مع صورة newspaper.png -->
+            <a href="article.html">
+                <img src="source/newspaper.png" alt="المقالات">
+                الانتقال إلى المقالات
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🚀 تم إنشاء هذا الموقع بواسطة <strong>Adem Essid</strong></p>
+        <small>© 2025 جميع الحقوق محفوظة.</small>
+    </div>
+
+    <script>
+        // تفعيل الوضع المظلم إذا كان مفعلًا
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
