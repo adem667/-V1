@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحقق - كشف الأخبار الكاذبة</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         /* الأساسيات */
         body {
@@ -12,21 +11,73 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            background-color: #f0f2f5;
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .taskbar {
+            background-color: #001a33; /* أزرق داكن جدًا */
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .taskbar h1 {
+            color: white;
+            font-size: 24px;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .taskbar .home-icon {
+            margin-left: 10px;
+        }
+
+        .taskbar .home-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        /* إضافة الأعلام */
+        .language-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-icons img {
+            width: 45px; /* زيادة الحجم */
+            height: 30px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .language-icons span {
+            margin-left: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
         }
 
         .container {
             max-width: 600px;
-            margin: 50px auto;
+            margin: 70px auto 20px auto; /* Adjust for the taskbar */
             background: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex: 1;
         }
 
-        h1 {
-            color: #333;
+        h2 {
+            color: #001a33; /* أزرق داكن جدًا */
         }
 
         p {
@@ -35,33 +86,58 @@
         }
 
         input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 90%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #001a33; /* أزرق داكن جدًا */
+            border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus {
+            border-color: #001a33; /* أزرق داكن جدًا */
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 26, 51, 0.3); /* أزرق داكن جدًا */
         }
 
         button {
-            background-color: #007bff;
+            background-color: #001a33; /* أزرق داكن جدًا */
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease;
+            font-size: 18px;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #000f1a; /* أزرق داكن أغمق */
+            transform: scale(1.05);
         }
 
         #result {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
+        }
+
+        /* الفوتر */
+        .footer {
+            padding: 15px;
+            text-align: center;
+            background-color: #001a33; /* أزرق داكن جدًا */
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            margin-top: auto;
+        }
+
+        .footer small {
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
         }
 
         /* الوضع المظلم */
@@ -90,94 +166,70 @@
             background-color: #444;
         }
 
-        .footer {
-            margin-top: 20px;
-            padding: 15px;
-            text-align: center;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            border-radius: 0 0 10px 10px;
-        }
-
-        .footer small {
-            font-size: 12px;
-            display: block;
-            margin-top: 5px;
-        }
-
-        /* دعم الهواتف */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            p {
-                font-size: 14px;
-            }
-
-            input[type="text"] {
-                width: 90%;
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            button {
-                width: 90%;
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-
-        /* تصميم العناصر الإخبارية */
-        .news-item {
-            border: 1px solid #ddd;
+        /* زر تبديل الوضع المظلم */
+        .dark-mode-toggle {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
             padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+        }
+
+        .dark-mode-toggle img {
+            width: 35px;
+            height: 35px;
+        }
+
+        /* تصميم الأخبار */
+        .news-item {
+            border: 2px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
             background-color: #f9f9f9;
-        }
-
-        .news-item h3 {
-            margin: 0;
-            color: #333;
-        }
-
-        .news-item p {
-            margin: 5px 0;
+            text-align: left;
         }
 
         .true-news {
-            border-left: 5px solid green;
+            border-left: 6px solid green;
             background-color: #eaffea;
         }
 
         .false-news {
-            border-left: 5px solid red;
+            border-left: 6px solid red;
             background-color: #ffeaea;
         }
 
         .neutral-news {
-            border-left: 5px solid orange;
+            border-left: 6px solid orange;
             background-color: #fff3cd;
         }
+
     </style>
 </head>
 <body>
+    <div class="taskbar">
+        <a href="home.html" class="home-icon">
+            <img src="source/home.png" alt="الصفحة الرئيسية">
+        </a>
+        <h1 id="pageTitle">تحقق من الأخبار</h1>
+        <div class="language-icons">
+            <img src="source/united-arab-emirates.png" alt="AR" onclick="changeLanguage('ar')">
+            <span id="arLabel">AR</span> <!-- علم الإمارات وعلامة AR -->
+            <img src="source/united-kingdom.png" alt="EN" onclick="changeLanguage('en')">
+            <span id="enLabel">EN</span> <!-- علم المملكة المتحدة وعلامة EN -->
+        </div>
+    </div>
+
     <div class="container">
-        <h1>تحقق من الأخبار</h1>
+        <h2>تحقق من الأخبار</h2>
         <p>أدخل نص الخبر للتحقق من صحته:</p>
         <input type="text" id="newsInput" placeholder="أدخل نص الخبر...">
         <button onclick="checkNews()">تحقق</button>
         <div id="result"></div>
-
-        <!-- زر الوضع المظلم -->
-        <button onclick="toggleDarkMode()">تبديل الوضع المظلم</button>
     </div>
 
     <div class="footer">
@@ -186,28 +238,30 @@
     </div>
 
     <script>
-        // تبديل الوضع المظلم
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
         async function checkNews() {
-            var input = document.getElementById("newsInput").value;
+            var input = document.getElementById("newsInput").value.trim();
             var result = document.getElementById("result");
             
-            if (input.trim() === "") {
+            if (input === "") {
                 result.innerHTML = "<p style='color:red;'>يرجى إدخال نص الخبر</p>";
                 return;
             }
 
-            var apiKey = "AIzaSyCmw3FAcbVWZIuyG-sNfU_wT-RemJ9ucpI"; // ضع مفتاح API الصحيح هنا
-            var apiUrl = `https://factchecktools.googleapis.com/v1alpha1/claims:search?query=${encodeURIComponent(input)}&key=${apiKey}`;
+            result.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;"><span class="loading"></span> جاري البحث عن المعلومات...</div>';
 
             try {
+                var apiKey = "AIzaSyCmw3FAcbVWZIuyG-sNfU_wT-RemJ9ucpI";
+                var apiUrl = `https://factchecktools.googleapis.com/v1alpha1/claims:search?query=${encodeURIComponent(input)}&key=${apiKey}`;
+
                 let response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`خطأ في الشبكة: ${response.status}`);
+                }
+                
                 let data = await response.json();
 
-                result.innerHTML = ""; // مسح النتائج السابقة
+                result.innerHTML = "";
 
                 if (data.claims && data.claims.length > 0) {
                     result.innerHTML = `<h2>تم العثور على ${data.claims.length} نتيجة:</h2>`;
@@ -222,38 +276,43 @@
                                 let reviewer = review.publisher?.name || "مصدر غير معروف";
                                 let reviewUrl = review.url || "#";
                                 
-                                let newsClass = "neutral-news"; // افتراضي
-                                if (rating.includes("False") || rating.includes("كاذب")) {
+                                let newsClass = "neutral-news";
+                                if (rating.includes("False") || rating.includes("كاذب") || rating.includes("خاطئ") || rating.includes("مضلل")) {
                                     newsClass = "false-news";
-                                } else if (rating.includes("True") || rating.includes("صحيح")) {
+                                } else if (rating.includes("True") || rating.includes("صحيح") || rating.includes("صحيحة") || rating.includes("دقيق")) {
                                     newsClass = "true-news";
                                 }
 
                                 result.innerHTML += `
                                     <div class="news-item ${newsClass}">
-                                        <h3>🔹 ${text}</h3>
-                                        <p><strong>📌 التقييم:</strong> ${rating}</p>
-                                        <p><strong>📰 المصدر:</strong> <a href="${reviewUrl}" target="_blank">${reviewer}</a></p>
+                                        <h3>التقييم: ${rating}</h3>
+                                        <p>${text}</p>
+                                        <a href="${reviewUrl}" target="_blank">المصدر</a>
                                     </div>
                                 `;
                             });
-                        } else {
-                            result.innerHTML += `
-                                <div class="news-item neutral-news">
-                                    <h3>🔹 ${text}</h3>
-                                    <p><strong>⚠️ لا يوجد تقييم متاح لهذا الخبر</strong></p>
-                                </div>
-                            `;
                         }
                     });
                 } else {
-                    result.innerHTML = "<p style='color:orange;'>⚠️ لم يتم العثور على مراجعات لهذا الخبر</p>";
+                    result.innerHTML = "<p>لم يتم العثور على نتائج لهذا الخبر.</p>";
                 }
             } catch (error) {
-                result.innerHTML = "<p style='color:red;'>❌ حدث خطأ أثناء جلب البيانات</p>";
-                console.error("Error fetching FactCheck API:", error);
+                result.innerHTML = `<p style='color:red;'>خطأ في الاتصال: ${error.message}</p>`;
+            }
+        }
+
+        function changeLanguage(language) {
+            if (language === "ar") {
+                document.getElementById("pageTitle").innerText = "تحقق من الأخبار";
+                document.getElementById("arLabel").style.fontWeight = "bold";
+                document.getElementById("enLabel").style.fontWeight = "normal";
+            } else if (language === "en") {
+                document.getElementById("pageTitle").innerText = "Fact Checker";
+                document.getElementById("arLabel").style.fontWeight = "normal";
+                document.getElementById("enLabel").style.fontWeight = "bold";
             }
         }
     </script>
 </body>
 </html>
+
