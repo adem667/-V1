@@ -14,26 +14,28 @@
             background-color: #f0f2f5;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         .taskbar {
-            background-color: #001a33; /* أزرق داكن جدًا */
+            background-color: #001a33;
             padding: 10px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .taskbar h1 {
-            color: white;
-            font-size: 24px;
             margin: 0;
+            font-size: 22px;
             flex-grow: 1;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .taskbar img {
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
         }
 
         .taskbar .home-icon {
@@ -44,6 +46,12 @@
             width: 30px;
             height: 30px;
             cursor: pointer;
+        }
+
+        .brand span {
+            font-weight: bold; /* جعل النص بالخط العريض */
+            font-size: 24px;
+            color: white;
         }
 
         .container {
@@ -146,9 +154,12 @@
 </head>
 <body>
     <div class="taskbar">
-        <a href="home.html" class="home-icon">
-            <img src="source\home.png" alt="الصفحة الرئيسية">
+        <a href="index.html" class="home-icon">
+            <img src="source/home.png" alt="الصفحة الرئيسية">
         </a>
+        <div class="brand">
+            <span>KTT</span>
+        </div>
         <h1>الصفحة الرئيسية</h1>
     </div>
 
@@ -158,7 +169,7 @@
 
         <div class="button-container">
             <!-- زر تحقق من الأخبار (Fact Checker) مع صورة robot.png -->
-            <a href="index.html">
+            <a href="bot.html">
                 <img src="source/robot.png" alt="تحقق من الأخبار">
                 تحقق من الأخبار
             </a>
