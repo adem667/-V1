@@ -46,7 +46,6 @@
             cursor: pointer;
         }
 
-        /* إضافة الأعلام */
         .language-icons {
             display: flex;
             align-items: center;
@@ -230,6 +229,11 @@
         <input type="text" id="newsInput" placeholder="أدخل نص الخبر...">
         <button onclick="checkNews()">تحقق</button>
         <div id="result"></div>
+
+        <!-- ملاحظة تحت النص -->
+        <p id="noteText" style="color: #c00; font-weight: bold;">
+            ⚠️ ملاحظة: المحرك لا يعمل بلصق نص الخبر بالكامل، بل باستخدام الكلمات المفتاحية فقط مثل: لقاح كورونا، زلزال المغرب، تسريبات، إلخ.
+        </p>
     </div>
 
     <div class="footer">
@@ -279,37 +283,54 @@
                                 let newsClass = "neutral-news";
                                 if (rating.includes("False") || rating.includes("كاذب") || rating.includes("خاطئ") || rating.includes("مضلل")) {
                                     newsClass = "false-news";
-                                } else if (rating.includes("True") || rating.includes("صحيح") || rating.includes("صحيحة") || rating.includes("دقيق")) {
+                                } else if (rating.includes("True") || rating.includes("صحيح") || rating.includes("صحيحة")) {
                                     newsClass = "true-news";
                                 }
 
                                 result.innerHTML += `
                                     <div class="news-item ${newsClass}">
-                                        <h3>التقييم: ${rating}</h3>
-                                        <p>${text}</p>
-                                        <a href="${reviewUrl}" target="_blank">المصدر</a>
+                                        <p><strong>التقييم:</strong> ${rating}</p>
+                                        <p><strong>المصدر:</strong> <a href="${reviewUrl}" target="_blank">${reviewer}</a></p>
+                                        <p><strong>النص:</strong> ${text}</p>
                                     </div>
                                 `;
                             });
+                        } else {
+                            result.innerHTML += `
+                                <div class="news-item neutral-news">
+                                    <p><strong>التقييم:</strong> غير متوفر</p>
+                                    <p><strong>المصدر:</strong> غير معروف</p>
+                                    <p><strong>النص:</strong> ${text}</p>
+                                </div>
+                            `;
                         }
                     });
                 } else {
-                    result.innerHTML = "<p>لم يتم العثور على نتائج لهذا الخبر.</p>";
+                    result.innerHTML = "<p style='color:red;'>لم يتم العثور على نتائج.</p>";
                 }
             } catch (error) {
                 result.innerHTML = `<p style='color:red;'>خطأ في الاتصال: ${error.message}</p>`;
             }
         }
 
+        // تغيير اللغة بناءً على الاختيار
         function changeLanguage(language) {
-            if (language === "ar") {
-                document.getElementById("pageTitle").innerText = "تحقق من الأخبار";
-                document.getElementById("arLabel").style.fontWeight = "bold";
-                document.getElementById("enLabel").style.fontWeight = "normal";
-            } else if (language === "en") {
-                document.getElementById("pageTitle").innerText = "Fact Checker";
-                document.getElementById("arLabel").style.fontWeight = "normal";
-                document.getElementById("enLabel").style.fontWeight = "bold";
+            if (language === 'ar') {
+                document.documentElement.lang = "ar";
+                document.getElementById("pageTitle").textContent = "تحقق من الأخبار";
+                document.querySelector("p").textContent = "أدخل نص الخبر للتحقق من صحته:";
+                document.querySelector("button").textContent = "تحقق";
+                document.getElementById("noteText").textContent = "⚠️  .ملاحظة: المحرك لا يعمل بلصق نص الخبر بالكامل، بل باستخدام الكلمات المفتاحية فقط مثل: لقاح كورونا، زلزال المغرب، تسريبات موت لاعب ، عمر لامين يامال";
+                document.getElementById("arLabel").textContent = "AR";
+                document.getElementById("enLabel").textContent = "EN";
+            } else {
+                document.documentElement.lang = "en";
+                document.getElementById("pageTitle").textContent = "News Fact-Checker";
+                document.querySelector("p").textContent = "Enter news text to verify its validity:";
+                document.querySelector("button").textContent = "Check";
+                document.getElementById("noteText").textContent = "⚠️ Note: The engine does not work by pasting the entire news text but by using keywords such as: COVID vaccine, Morocco earthquake, leaks,Death of a player, Age of Lamine Yamal, etc.";
+                document.getElementById("arLabel").textContent = "AR";
+                document.getElementById("enLabel").textContent = "EN";
             }
         }
     </script>
