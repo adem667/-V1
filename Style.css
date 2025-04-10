@@ -6,17 +6,63 @@ body {
     padding: 0;
 }
 
+.taskbar {
+    background-color: #001a33;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.taskbar h1 {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.taskbar .home-icon img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.language-icons {
+    display: flex;
+    align-items: center;
+}
+
+.language-icons img {
+    width: 45px;
+    height: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.language-icons span {
+    margin-left: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .container {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 80px auto 20px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-    color: #333;
+h2 {
+    color: #001a33;
 }
 
 p {
@@ -123,4 +169,20 @@ button:hover {
         width: 100%;
         padding: 12px;
     }
+}
+
+.footer {
+    padding: 15px;
+    text-align: center;
+    background-color: #001a33;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top: auto;
+}
+
+.footer small {
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
 }
