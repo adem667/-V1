@@ -16,24 +16,38 @@
         }
 
         .taskbar {
-            background-color: #001a33; /* أزرق داكن جدًا */
+            background-color: #001a33;
             padding: 10px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .taskbar h1 {
+        .taskbar a {
             color: white;
-            font-size: 24px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .taskbar img {
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+        }
+
+        .taskbar h1 {
             margin: 0;
+            font-size: 22px;
             flex-grow: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .brand span {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
         }
 
         .taskbar .home-icon {
@@ -211,15 +225,18 @@
 </head>
 <body>
     <div class="taskbar">
-        <a href="home.html" class="home-icon">
+        <a href="index.html" class="home-icon">
             <img src="source/home.png" alt="الصفحة الرئيسية">
         </a>
+        <div class="brand">
+            <span>KTT</span>
+        </div>
         <h1 id="pageTitle">تحقق من الأخبار</h1>
         <div class="language-icons">
             <img src="source/united-arab-emirates.png" alt="AR" onclick="changeLanguage('ar')">
-            <span id="arLabel">AR</span> <!-- علم الإمارات وعلامة AR -->
+            <span id="arLabel">AR</span>
             <img src="source/united-kingdom.png" alt="EN" onclick="changeLanguage('en')">
-            <span id="enLabel">EN</span> <!-- علم المملكة المتحدة وعلامة EN -->
+            <span id="enLabel">EN</span>
         </div>
     </div>
 
@@ -237,8 +254,8 @@
     </div>
 
     <div class="footer">
-        <p>🚀 تم إنشاء هذا الموقع بواسطة <strong>Adem Essid</strong></p>
-        <small>© 2025 جميع الحقوق محفوظة.</small>
+        <p id="footerText">🚀 تم إنشاء هذا الموقع بواسطة <strong>Adem Essid</strong></p>
+        <small id="rightsText">© 2025 جميع الحقوق محفوظة.</small>
     </div>
 
     <script>
@@ -258,17 +275,17 @@
                 var apiUrl = `https://factchecktools.googleapis.com/v1alpha1/claims:search?query=${encodeURIComponent(input)}&key=${apiKey}`;
 
                 let response = await fetch(apiUrl);
-                
+
                 if (!response.ok) {
                     throw new Error(`خطأ في الشبكة: ${response.status}`);
                 }
-                
+
                 let data = await response.json();
 
                 result.innerHTML = "";
 
                 if (data.claims && data.claims.length > 0) {
-                    result.innerHTML = `<h2>تم العثور على ${data.claims.length} نتيجة:</h2>`;
+                    result.innerHTML = `<h2>${foundResultsText} ${data.claims.length} ${resultsText}:</h2>`;
 
                     data.claims.forEach(claim => {
                         let text = claim.text || "لم يتم توفير نص الخبر.";
@@ -280,6 +297,7 @@
                                 let reviewer = review.publisher?.name || "مصدر غير معروف";
                                 let reviewUrl = review.url || "#";
                                 
+
                                 let newsClass = "neutral-news";
                                 if (rating.includes("False") || rating.includes("كاذب") || rating.includes("خاطئ") || rating.includes("مضلل")) {
                                     newsClass = "false-news";
@@ -287,22 +305,20 @@
                                     newsClass = "true-news";
                                 }
 
-                                result.innerHTML += `
-                                    <div class="news-item ${newsClass}">
-                                        <p><strong>التقييم:</strong> ${rating}</p>
-                                        <p><strong>المصدر:</strong> <a href="${reviewUrl}" target="_blank">${reviewer}</a></p>
-                                        <p><strong>النص:</strong> ${text}</p>
-                                    </div>
-                                `;
+                                result.innerHTML += 
+                                    `<div class="news-item ${newsClass}">
+                                        <p><strong>${ratingText}:</strong> ${rating}</p>
+                                        <p><strong>${sourceText}:</strong> <a href="${reviewUrl}" target="_blank">${reviewer}</a></p>
+                                        <p><strong>${textText}:</strong> ${text}</p>
+                                    </div>`;
                             });
                         } else {
-                            result.innerHTML += `
-                                <div class="news-item neutral-news">
-                                    <p><strong>التقييم:</strong> غير متوفر</p>
-                                    <p><strong>المصدر:</strong> غير معروف</p>
-                                    <p><strong>النص:</strong> ${text}</p>
-                                </div>
-                            `;
+                            result.innerHTML += 
+                                `<div class="news-item neutral-news">
+                                    <p><strong>${ratingText}:</strong> غير متوفر</p>
+                                    <p><strong>${sourceText}:</strong> غير معروف</p>
+                                    <p><strong>${textText}:</strong> ${text}</p>
+                                </div>`;
                         }
                     });
                 } else {
@@ -315,25 +331,39 @@
 
         // تغيير اللغة بناءً على الاختيار
         function changeLanguage(language) {
-            if (language === 'ar') {
-                document.documentElement.lang = "ar";
-                document.getElementById("pageTitle").textContent = "تحقق من الأخبار";
-                document.querySelector("p").textContent = "أدخل نص الخبر للتحقق من صحته:";
-                document.querySelector("button").textContent = "تحقق";
-                document.getElementById("noteText").textContent = "⚠️  .ملاحظة: المحرك لا يعمل بلصق نص الخبر بالكامل، بل باستخدام الكلمات المفتاحية فقط مثل: لقاح كورونا، زلزال المغرب، تسريبات موت لاعب ، عمر لامين يامال";
-                document.getElementById("arLabel").textContent = "AR";
-                document.getElementById("enLabel").textContent = "EN";
-            } else {
-                document.documentElement.lang = "en";
-                document.getElementById("pageTitle").textContent = "News Fact-Checker";
-                document.querySelector("p").textContent = "Enter news text to verify its validity:";
-                document.querySelector("button").textContent = "Check";
-                document.getElementById("noteText").textContent = "⚠️ Note: The engine does not work by pasting the entire news text but by using keywords such as: COVID vaccine, Morocco earthquake, leaks,Death of a player, Age of Lamine Yamal, etc.";
-                document.getElementById("arLabel").textContent = "AR";
-                document.getElementById("enLabel").textContent = "EN";
-            }
-        }
+    if (language === 'ar') {
+        document.documentElement.lang = "ar";
+        document.getElementById("pageTitle").textContent = "تحقق من الأخبار";
+        document.querySelector("p").textContent = "أدخل الكلمات المفتاحية للتحقق من صحتها:"; // الترجمة المطلوبة هنا
+        document.querySelector("button").textContent = "تحقق";
+        document.getElementById("noteText").textContent = "⚠️ ملاحظة: المحرك لا يعمل بلصق نص الخبر بالكامل، بل باستخدام الكلمات المفتاحية فقط مثل: لقاح كورونا، زلزال المغرب، تسريبات، إلخ.";
+        document.getElementById("footerText").innerHTML = "🚀 تم إنشاء هذا الموقع بواسطة <strong>Adem Essid</strong>";
+        document.getElementById("rightsText").textContent = "© 2025 جميع الحقوق محفوظة.";
+        foundResultsText = "تم العثور على";
+        resultsText = "نتيجة";
+        ratingText = "التقييم";
+        sourceText = "المصدر";
+        textText = "النص";
+        document.getElementById("arLabel").textContent = "AR";
+        document.getElementById("enLabel").textContent = "EN";
+    } else {
+        document.documentElement.lang = "en";
+        document.getElementById("pageTitle").textContent = "News Fact-Checker"; // الترجمة الصحيحة هنا
+        document.querySelector("p").textContent = "Enter keywords to verify their validity:"; // الترجمة للإنجليزية هنا
+        document.querySelector("button").textContent = "Check";
+        document.getElementById("noteText").textContent = "⚠️ Note: The engine does not work by pasting the entire news text but by using keywords such as: COVID vaccine, Morocco earthquake, leaks, etc.";
+        document.getElementById("footerText").innerHTML = "🚀 This site was created by <strong>Adem Essid</strong>";
+        document.getElementById("rightsText").textContent = "© 2025 All rights reserved.";
+        foundResultsText = "Found";
+        resultsText = "result(s)";
+        ratingText = "Rating";
+        sourceText = "Source";
+        textText = "Text";
+        document.getElementById("arLabel").textContent = "AR";
+        document.getElementById("enLabel").textContent = "EN";
+    }
+}
+
     </script>
 </body>
 </html>
-
