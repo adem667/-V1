@@ -12,30 +12,53 @@
             background-color: #f0f2f5;
             color: #333;
         }
+        
         .taskbar {
             background-color: #001a33;
             padding: 10px;
-            text-align: center;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .taskbar a {
             color: white;
             text-decoration: none;
             font-size: 20px;
         }
+
         .taskbar img {
             width: 30px;
             height: 30px;
             margin-left: 10px;
         }
-         .taskbar span {
-            font-size: 18px;
+
+        .taskbar h1 {
+            margin: 0;
+            font-size: 22px;
+            flex-grow: 1;
+            text-align: center;
             color: white;
-            font-weight: bold;
         }
+
+        .taskbar .home-icon {
+            margin-left: 10px;
+        }
+
+        .taskbar .home-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .taskbar .brand {
+            margin-left: auto;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+        }
+
         .container {
             width: 80%;
             margin: 80px auto;
@@ -44,21 +67,25 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         h1, h2 {
             text-align: center;
             color: #001a33;
         }
+
         img {
             display: block;
             margin: 20px auto;
             max-width: 100%;
             height: auto;
         }
+
         p {
             font-size: 18px;
             margin: 15px 0;
             line-height: 1.6;
         }
+
         .footer {
             background-color: #001a33;
             color: white;
@@ -72,15 +99,21 @@
 <body>
 
     <div class="taskbar">
-         <a href="home.html" class="home-icon">
-            <img src="source\home.png" alt="الصفحة الرئيسية">
-        </a>
-         <span>KTT</span> 
+        <!-- وضع HOME أولاً على اليمين -->
+        <div class="home-icon">
+            <a href="index.html">
+                <img src="source/home.png" alt="الصفحة الرئيسية">
+            </a>
+        </div>
+        <!-- ثم KTT -->
         <h1>تعريف الأخبار الكاذبة وأثرها</h1>
+        <div class="brand">
+            <span>KTT</span>
+        </div>
     </div>
 
     <div class="container">
-        <img src="source\fakeNews.jpg" alt="Fake News">
+        <img src="source/fakeNews.jpg" alt="Fake News">
         <h1>ما هي الأخبار الكاذبة؟</h1>
         <p>الأخبار الكاذبة هي الأخبار التي تحتوي على معلومات غير دقيقة أو مفبركة، تهدف إلى تضليل الجمهور أو التأثير في الرأي العام. قد تكون هذه الأخبار تهدف إلى نشر الفتنة أو تحقيق مكاسب اقتصادية أو سياسية. أصبحت الأخبار الكاذبة اليوم من أكثر التحديات التي تواجه المجتمعات، وخاصة في عصر الإنترنت ووسائل التواصل الاجتماعي.</p>
 
